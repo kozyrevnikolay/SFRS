@@ -36,14 +36,7 @@ len_x = int(1e2)
 len_phi = int(1e2)
 
 figure_handle = Figure(figsize=(5, 5), dpi=100)
-axes_handle1 = figure_handle.add_subplot(8, 1, 1)
-axes_handle2 = figure_handle.add_subplot(8, 1, 2)
-axes_handle3 = figure_handle.add_subplot(8, 1, 3)
-axes_handle4 = figure_handle.add_subplot(8, 1, 4)
-axes_handle5 = figure_handle.add_subplot(8, 1, 5)
-axes_handle6 = figure_handle.add_subplot(8, 1, 6)
-axes_handle7 = figure_handle.add_subplot(8, 1, 7)
-axes_handle8 = figure_handle.add_subplot(8, 1, 8)
+axes_handle = [figure_handle.add_subplot(8, 1, i) for i in range(1, 9)]
 canvas = FigureCanvasTkAgg(figure_handle, master=main_window)
 canvas.show()
 canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
@@ -70,23 +63,7 @@ for phi0C in phi0:
                     time_of_one_iteration = time_of_one_iteration_finish - time_of_one_iteration_start
                     time_elapsed += time_of_one_iteration
                     current_iteration += 1
-
-                    axes_handle1.plot(current_iteration, experiment[0], 'r.')
-                    axes_handle1.plot(current_iteration, integral[0], 'b.')
-                    axes_handle2.plot(current_iteration, experiment[1], 'r.')
-                    axes_handle2.plot(current_iteration, integral[1], 'b.')
-                    axes_handle3.plot(current_iteration, experiment[2], 'r.')
-                    axes_handle3.plot(current_iteration, integral[2], 'b.')
-                    axes_handle4.plot(current_iteration, experiment[3], 'r.')
-                    axes_handle4.plot(current_iteration, integral[3], 'b.')
-                    axes_handle5.plot(current_iteration, experiment[4], 'r.')
-                    axes_handle5.plot(current_iteration, integral[4], 'b.')
-                    axes_handle6.plot(current_iteration, experiment[5], 'r.')
-                    axes_handle6.plot(current_iteration, integral[5], 'b.')
-                    axes_handle7.plot(current_iteration, experiment[6], 'r.')
-                    axes_handle7.plot(current_iteration, integral[6], 'b.')
-                    axes_handle8.plot(current_iteration, experiment[7], 'r.')
-                    axes_handle8.plot(current_iteration, integral[7], 'b.')
+                    map(lambda x: axes_handle[x].plot(current_iteration, experiment[x], 'r.', current_iteration, integral[x], 'b.'), range(8))
                     canvas.draw()
                     if label_one_iteration_time is not None:
                         label_one_iteration_time.destroy()
